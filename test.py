@@ -59,11 +59,9 @@ def main() :
     
     event_dict = sort_events(calendar)
     event_dict = free_time(event_dict)
-    try:
-        june_12 = event_dict[(9, 25, 2022)]
-    except:
-        print("all free")
-        
+
+    june_12 = event_dict[(9, 25, 2022)]
+    print(june_12)
 
 
 if __name__ == '__main__' :
