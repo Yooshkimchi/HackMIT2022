@@ -1,10 +1,11 @@
 import arrow
+from queue import PriorityQueue
 
-class Task:
+class Task(object):
     def __init__(self):
-        completed = False
-        priority = 0
-        name = ""
+        self.completed = False
+        self.priority = 0
+        self.task_name = ""
 
     # integratedML stuff
     
@@ -13,9 +14,18 @@ class Task:
         # some integratedML shit
 
     # user input stuff
-    def newName(self):
-        name = input("> ")
-        print(name, "is the name of the task")
+    def newName(self, new_name):
+        self.task_name = new_name
+        print(self.task_name, "is the name of the task")
+
+    def getName(self):
+        return self.task_name
+
+    def newPriority(self, priority):
+        self.priority = priority
+
+    def getPriority(self):
+        return self.priority
 
     def newTaskLength(self):
         print("Task length (hours): ")
@@ -23,7 +33,4 @@ class Task:
         print(task_length, "is the length of the task")
     
     def completed(self):
-        completed = True
-
-# test_task = Task()
-# test_task.newName()
+        self.completed = True
