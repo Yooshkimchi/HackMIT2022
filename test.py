@@ -5,6 +5,7 @@
 
 from ics import Calendar, Event
 from datetime import datetime
+import sys
 
 def sort_events(calendar) :
     ''' First we need to sort the events by day. '''
@@ -50,14 +51,16 @@ def free_time(sorted_events, minutes_interval = 15) :
 
 def main() :
 
-    with open('calendar.ics', 'r') as f :
+    file_name = sys.argv[1] if len(sys.argv) > 1 else 'calendar.ics'
+
+    with open(file_name, 'r') as f :
         text = "".join( _ for _ in f.readlines())
         calendar = Calendar(text)
     
     event_dict = sort_events(calendar)
     event_dict = free_time(event_dict)
 
-    june_12 = event_dict[(6, 12, 2021)]
+    june_12 = event_dict[(9, 25, 2022)]
     print(june_12)
 
 
