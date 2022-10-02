@@ -15,7 +15,7 @@ class Task(object):
         else:
             return str(time % 60)
     
-    def getStartTime(self, time):
+    def setStartTime(self, time):
         a = arrow.utcnow()
         if (time < 600):
             converted_time = "0" + str(int(time / 60)) + ":" + self.figureOutZeroes(time) + ":00"
@@ -23,7 +23,10 @@ class Task(object):
             converted_time = str(int(time / 60)) + ":" + self.figureOutZeroes(time) + ":00"
         converted_time = str(a.date()) + " " + converted_time
         datetime = arrow.get(converted_time, "YYYY-MM-DD HH:mm:ss")
-        return datetime
+        self.datetime = datetime
+    
+    def getStartTime(self):
+        return self.datetime
 
     # user input stuff
     def newName(self, new_name):
@@ -48,34 +51,39 @@ class Task(object):
 def isolate_priorities(e):
     return e.getPriority()
 
+def isolate_times(e):
+    return e.getStartTime()
+
 # inputs taskList as a dictionary (key = task priority, value = object)
 def priority_manager(taskList):
     taskList.sort(key=isolate_priorities)
     return taskList
 
-# def time_manager(taskList):
-    
+def time_manager(taskList):
+    taskList.sort(key=isolate_times)
+    return taskList
 
 taskList = []
 
 tTask = Task()
 tTask.newName("fuck me")
 tTask.newPriority(2)
-print(tTask.getStartTime(240))
+print(tTask.setStartTime(240)) # 4 AM
 taskList.append(tTask)
 
 tTask2 = Task()
-tTask2.newName("test 2")
+tTask2.newName("fuck me later")
 tTask2.newPriority(6)
-print(tTask.getStartTime(800))
+print(tTask2.setStartTime(990)) # 4:30 AM 
 taskList.append(tTask2)
 
 tTask3 = Task()
-tTask3.newName("fuck test 4")
+tTask3.newName("fuck test midday")
 tTask3.newPriority(2)
+print(tTask3.setStartTime(720)) # 12 PM
 taskList.append(tTask3)
 
-plist = priority_manager(taskList)
+plist = time_manager(taskList)
 
 for task in plist:
     print(task.getName())
