@@ -53,7 +53,7 @@ def main() :
 
     file_name = sys.argv[1] if len(sys.argv) > 1 else 'calendar.ics'
 
-    with open(file_name, 'r') as f :
+    with open(file_name, 'r', encoding='utf-8') as f :
         text = "".join( _ for _ in f.readlines())
         calendar = Calendar(text)
     
