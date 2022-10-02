@@ -8,10 +8,22 @@ class Task(object):
         self.task_name = ""
 
     # integratedML stuff
+
+    def figureOutZeroes(self, time):
+        if (time % 60 == 0):
+            return "00"
+        else:
+            return str(time % 60)
     
     def getStartTime(self, time):
-        converted_time = str(time / 60) + ":" + str(time % 60) + ":00"
-        return converted_time
+        a = arrow.utcnow()
+        if (time < 600):
+            converted_time = "0" + str(int(time / 60)) + ":" + self.figureOutZeroes(time) + ":00"
+        else:
+            converted_time = str(int(time / 60)) + ":" + self.figureOutZeroes(time) + ":00"
+        converted_time = str(a.date()) + " " + converted_time
+        datetime = arrow.get(converted_time, "YYYY-MM-DD HH:mm:ss")
+        return datetime
 
     # user input stuff
     def newName(self, new_name):
@@ -38,12 +50,11 @@ def isolate_priorities(e):
 
 # inputs taskList as a dictionary (key = task priority, value = object)
 def priority_manager(taskList):
-    print(taskList)
     taskList.sort(key=isolate_priorities)
     return taskList
 
 # def time_manager(taskList):
-
+    
 
 taskList = []
 
@@ -56,6 +67,7 @@ taskList.append(tTask)
 tTask2 = Task()
 tTask2.newName("test 2")
 tTask2.newPriority(6)
+print(tTask.getStartTime(800))
 taskList.append(tTask2)
 
 tTask3 = Task()
